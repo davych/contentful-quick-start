@@ -5,7 +5,7 @@ const Page = ({ data }) => {
   return (
     <main>
       <h1>{data.contentfulPage.title}</h1>
-      <p>{data.contentfulPage.description.description}</p>
+      <pre>{data.contentfulPage.description.description}</pre>
       <img
         src={data.contentfulPage.image.file.url}
         alt={data.title}
