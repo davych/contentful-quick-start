@@ -1,30 +1,20 @@
-export default {
-    stackbitVersion: "~0.6.0",
-    filterModel({ models, userContext }) {
-      // Filtering logic based on current user context ...
-      return true
-    },
-    siteMapModel({ models, userContext }) {
-      // Custom sitemap model ...
-      return models
-    },
-    pageModel({ models, userContext }) {
-      // Custom page model ...
-      return models
-    },
-    siteMap ({ models, userContext }) {
-      // Custom sitemap ...
-      return [
-        {
-            url: '/page-1',
-            changefreq: 'daily',
-            priority: 0.7
-            },
-            {
-            url: '/page-2',
-            changefreq: 'daily',
-            priority: 0.7
-        }
-      ]
-    }
+import { defineStackbitConfig } from "@stackbit/types";
+import { ContentfulContentSource } from "@stackbit/cms-contentful";
+
+export default defineStackbitConfig({
+  stackbitVersion: "~0.6.0",
+  ssgName: "nextjs",
+  nodeVersion: "16",
+  contentSources: [
+    new ContentfulContentSource({
+      spaceId: process.env.CONTENTFUL_SPACE_ID,
+      environment: process.env.CONTENTFUL_ENVIRONMENT,
+      previewToken: process.env.CONTENTFUL_PREVIEW_TOKEN,
+      accessToken: process.env.CONTENTFUL_MANAGEMENT_TOKEN,
+      useWebhookForContentUpdates: true
+    })
+  ],
+  models: {
+    page: { type: "page", urlPath: "/{slug}" }
   }
+});
